@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id             Int      @id @default(autoincrement())
+  name           String   @default("Kuldipkumar Patel")
+  primaryTitle   String   @default("Senior Technical Support Engineer")
+  secondaryTitle String   @default("Application Support • Cloud • DevOps • Full-Stack")
+  introduction   String   @db.Text
+  aboutSummary   String   @db.Text
+  yearsOfExp     String   @default("6+")
+  technologies   String   @default("30+")
+  issuesResolved String   @default("1000+")
+  supportLevel   String   @default("24/7")
+  resumeUrl      String?
+  profileImage   String?
+  githubUrl      String?
+  linkedinUrl    String?
+  email          String?
+  updatedAt      DateTime @updatedAt
+}
+
+model Experience {
+  id             Int      @id @default(autoincrement())
+  company        String
+  position       String
+  location       String?
+  startDate      String
+  endDate        String   @default("Present")
+  description    String   @db.Text // Bullet points or text
+  technologies   String   // Comma separated
+  achievements   String?  @db.Text
+  order          Int      @default(0)
+  createdAt      DateTime @default(now())
+}
+
+model SkillCategory {
+  id        Int      @id @default(autoincrement())
+  name      String
+  order     Int      @default(0)
+  skills    Skill[]
+}
+
+model Skill {
+  id              Int            @id @default(autoincrement())
+  name            String
+  level           Int            @default(80) // 1-100
+  categoryId      Int
+  category        SkillCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  relatedProjects String?        // For hover states
+  technologies    String?        // Detailed tech used
+  order           Int            @default(0)
+}
+
+model Project {
+  id           Int      @id @default(autoincrement())
+  title        String
+  category     String   @default("All") // e.g. Full Stack, React, DevOps
+  shortDesc    String   @db.Text
+  problem      String?  @db.Text
+  solution     String?  @db.Text
+  architecture String?  @db.Text
+  challenges   String?  @db.Text
+  results      String?  @db.Text
+  technologies String   // Comma separated
+  imageUrl     String?
+  githubUrl    String?
+  liveUrl      String?
+  featured     Boolean  @default(false)
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+}
+
+model Education {
+  id           Int      @id @default(autoincrement())
+  institution  String
+  degree       String
+  startDate    String
+  endDate      String
+  description  String?  @db.Text
+  order        Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Service {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String   @db.Text
+  icon        String   @default("code") // Lucide icon name
+  order       Int      @default(0)
+}
+
+model Testimonial {
+  id        Int      @id @default(autoincrement())
+  name      String
+  role      String
+  company   String
+  content   String   @db.Text
+  avatarUrl String?
+  order     Int      @default(0)
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  subject   String?
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model ThemeSettings {
+  id                  Int      @id @default(autoincrement())
+  primaryColor        String   @default("#3b82f6")
+  secondaryColor      String   @default("#8b5cf6")
+  backgroundColor     String   @default("#050505")
+  accentColor         String   @default("#10b981")
+  fontFamily          String   @default("Inter")
+  backgroundAnimation String   @default("mesh")
+  enableParallax      Boolean  @default(true)
+  cardStyle           String   @default("glassmorphism")
+  borderRadius        String   @default("8px")
+  buttonStyle         String   @default("filled")
+  updatedAt           DateTime @updatedAt
+}

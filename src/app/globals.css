@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-success: var(--success);
+  --color-error: var(--error);
+}
+
+:root {
+  --background: #050505;
+  --surface: #0a0a0a;
+  --surface-elevated: #171717;
+  
+  --primary: #3b82f6; /* Electric blue */
+  --secondary: #8b5cf6; /* Violet */
+  
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  
+  --border: #262626;
+  
+  --success: #22c55e;
+  --error: #ef4444;
+}
+
+/* Base resets & typography */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background-color: var(--background);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 5px;
+  border: 2px solid var(--background);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  background: rgba(10, 10, 10, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.glass-card {
+  background: rgba(20, 20, 20, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.glass-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 15px 40px -10px rgba(59, 130, 246, 0.3), 0 0 20px rgba(139, 92, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.4);
+  background: rgba(30, 30, 30, 0.5);
+}
+
+/* Glow effects */
+.glow-text {
+  text-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Background Gradients */
+.bg-gradient-mesh {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-color: var(--background);
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15), transparent 30%),
+    radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15), transparent 30%);
+  animation: pulse-bg 15s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-bg {
+  0% {
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.15), transparent 30%),
+      radial-gradient(circle at 85% 30%, rgba(139, 92, 246, 0.15), transparent 30%);
+  }
+  100% {
+    background-image: 
+      radial-gradient(circle at 25% 60%, rgba(59, 130, 246, 0.2), transparent 40%),
+      radial-gradient(circle at 75% 20%, rgba(139, 92, 246, 0.2), transparent 40%);
+  }
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+.btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}

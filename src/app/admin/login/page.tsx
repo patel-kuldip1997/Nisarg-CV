@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { Lock, User } from "lucide-react";
+import Link from "next/link";
 
 export default function AdminLogin() {
   const [username, setUsername] = useState("");
@@ -81,8 +82,14 @@ export default function AdminLogin() {
             </div>
           </div>
 
+          <div className="flex justify-end mt-2">
+            <Link href="/admin/forgot-password" className="text-sm text-primary hover:text-primary/80 transition-colors font-medium">
+              Forgot Password?
+            </Link>
+          </div>
+
           <button 
-            type="submit" 
+            type="submit"  
             disabled={loading}
             className="w-full btn-primary py-3 text-lg disabled:opacity-70 flex justify-center"
           >

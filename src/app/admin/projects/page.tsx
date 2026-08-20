@@ -10,6 +10,7 @@ export default function AdminProjects() {
   const [isEditing, setIsEditing] = useState(false);
   const [currentId, setCurrentId] = useState<number | null>(null);
   const [formData, setFormData] = useState({ title: "", shortDesc: "", category: "Web", technologies: "", githubUrl: "", liveUrl: "", imageUrl: "" });
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => { fetchProjects(); }, []);
 
@@ -38,6 +39,29 @@ export default function AdminProjects() {
     fetchProjects();
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files?.[0]) return;
+    setUploading(true);
+    const file = e.target.files[0];
+    const data = new FormData();
+    data.append("file", file);
+
+    try {
+      const res = await fetch("/api/upload", { method: "POST", body: data });
+      const json = await res.json();
+      if (json.success) {
+        setFormData({ ...formData, imageUrl: json.url });
+        toast.success("Image uploaded successfully!");
+      } else {
+        toast.error("Failed to upload image.");
+      }
+    } catch (err) {
+      toast.error("Upload error.");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const handleEdit = (item: any) => {
     setIsEditing(true);
     setCurrentId(item.id);
@@ -64,8 +88,21 @@ export default function AdminProjects() {
             <input type="text" placeholder="Technologies (CSV)" className="w-full bg-surface border border-border rounded p-3 text-white" value={formData.technologies} onChange={e => setFormData({...formData, technologies: e.target.value})} required />
             <input type="text" placeholder="Github URL" className="w-full bg-surface border border-border rounded p-3 text-white" value={formData.githubUrl} onChange={e => setFormData({...formData, githubUrl: e.target.value})} />
             <input type="text" placeholder="Live URL" className="w-full bg-surface border border-border rounded p-3 text-white" value={formData.liveUrl} onChange={e => setFormData({...formData, liveUrl: e.target.value})} />
-            <input type="text" placeholder="Image URL" className="w-full bg-surface border border-border rounded p-3 text-white" value={formData.imageUrl} onChange={e => setFormData({...formData, imageUrl: e.target.value})} />
-            <div className="flex gap-4">
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-text-muted">Project Image</label>
+              <div className="flex gap-4 items-center">
+                <input type="file" accept="image/*" onChange={handleImageUpload} className="w-full bg-surface border border-border rounded p-2 text-white file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-primary/90" />
+                {uploading && <span className="text-sm text-primary">Uploading...</span>}
+              </div>
+              {formData.imageUrl && (
+                <div className="mt-2">
+                  <img src={formData.imageUrl} alt="Preview" className="w-32 h-20 object-cover rounded border border-border" />
+                </div>
+              )}
+            </div>
+
+            <div className="flex gap-4 pt-2">
               <button type="submit" className="btn-primary w-full">{isEditing ? "Update" : "Add"}</button>
               {isEditing && <button type="button" onClick={resetForm} className="btn-outline w-full">Cancel</button>}
             </div>

@@ -41,6 +41,28 @@ body {
   overflow-x: hidden;
 }
 
+/* Typography Engine */
+[data-font-weight="bold"] h1, [data-font-weight="bold"] h2, [data-font-weight="bold"] h3 { font-weight: 700; }
+[data-font-weight="extrabold"] h1, [data-font-weight="extrabold"] h2, [data-font-weight="extrabold"] h3 { font-weight: 800; }
+[data-font-weight="black"] h1, [data-font-weight="black"] h2, [data-font-weight="black"] h3 { font-weight: 900; }
+[data-font-weight="medium"] h1, [data-font-weight="medium"] h2, [data-font-weight="medium"] h3 { font-weight: 500; }
+
+[data-body-weight="light"] p { font-weight: 300; }
+[data-body-weight="normal"] p { font-weight: 400; }
+[data-body-weight="medium"] p { font-weight: 500; }
+
+[data-letter-spacing="tight"] { letter-spacing: -0.025em; }
+[data-letter-spacing="normal"] { letter-spacing: 0; }
+[data-letter-spacing="wide"] { letter-spacing: 0.05em; }
+[data-letter-spacing="widest"] { letter-spacing: 0.1em; }
+
+[data-line-height="tight"] p { line-height: 1.25; }
+[data-line-height="relaxed"] p { line-height: 1.625; }
+[data-line-height="loose"] p { line-height: 2; }
+
+[data-text-transform="uppercase"] h1, [data-text-transform="uppercase"] h2, [data-text-transform="uppercase"] h3 { text-transform: uppercase; }
+[data-text-transform="lowercase"] h1, [data-text-transform="lowercase"] h2, [data-text-transform="lowercase"] h3 { text-transform: lowercase; }
+
 /* Premium Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
@@ -65,20 +87,58 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
+/* Card Shape Engine (Elementor Pro Style) */
 .glass-card {
+  border-radius: var(--radius);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 1. Glassmorphism (Default) */
+[data-card-style="glassmorphism"] .glass-card {
   background: rgba(20, 20, 20, 0.4);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.glass-card:hover {
+[data-card-style="glassmorphism"] .glass-card:hover {
   transform: translateY(-8px) scale(1.01);
-  box-shadow: 0 15px 40px -10px rgba(59, 130, 246, 0.3), 0 0 20px rgba(139, 92, 246, 0.1);
-  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 15px 40px -10px color-mix(in srgb, var(--primary) 30%, transparent), 0 0 20px color-mix(in srgb, var(--accent) 10%, transparent);
+  border-color: color-mix(in srgb, var(--primary) 40%, transparent);
   background: rgba(30, 30, 30, 0.5);
+}
+
+/* 2. Flat (Apple Minimalist) */
+[data-card-style="flat"] .glass-card {
+  background: var(--surface-elevated);
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+[data-card-style="flat"] .glass-card:hover {
+  background: var(--surface);
+  border-color: var(--border);
+  transform: scale(1.02);
+}
+
+/* 3. Outline (Wireframe/Tech) */
+[data-card-style="outline"] .glass-card {
+  background: transparent;
+  border: 2px solid var(--border);
+}
+[data-card-style="outline"] .glass-card:hover {
+  border-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 5%, transparent);
+}
+
+/* 4. Neumorphism (Embossed 3D) */
+[data-card-style="neumorphism"] .glass-card {
+  background: var(--background);
+  border: none;
+  box-shadow: 10px 10px 20px rgba(0,0,0,0.8), -10px -10px 20px rgba(255,255,255,0.05);
+}
+[data-card-style="neumorphism"] .glass-card:hover {
+  box-shadow: inset 10px 10px 20px rgba(0,0,0,0.8), inset -10px -10px 20px rgba(255,255,255,0.05);
+  transform: scale(0.98);
 }
 
 /* Glow effects */
@@ -128,23 +188,68 @@ body {
   }
 }
 
-/* Buttons */
+/* Button Shape Engine */
 .btn-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius);
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.3s ease;
-  border: none;
   cursor: pointer;
 }
-.btn-primary:hover {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+
+[data-btn-padding="small"] .btn-primary { padding: 0.5rem 1rem; font-size: 0.875rem; }
+[data-btn-padding="normal"] .btn-primary { padding: 0.75rem 1.5rem; }
+[data-btn-padding="large"] .btn-primary { padding: 1rem 2rem; font-size: 1.125rem; }
+
+[data-btn-hover="lift"] .btn-primary:hover { transform: translateY(-4px); }
+[data-btn-hover="scale"] .btn-primary:hover { transform: scale(1.05); }
+[data-btn-hover="glow"] .btn-primary:hover { box-shadow: 0 0 25px var(--primary); }
+[data-btn-hover="none"] .btn-primary:hover { transform: none; }
+
+/* 1. Filled (Solid) */
+[data-button-style="filled"] .btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+}
+[data-button-style="filled"] .btn-primary:hover {
+  background: var(--secondary);
   transform: translateY(-2px);
+}
+
+/* 2. Gradient (Shiny) */
+[data-button-style="gradient"] .btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+}
+[data-button-style="gradient"] .btn-primary:hover {
+  box-shadow: 0 0 20px color-mix(in srgb, var(--primary) 40%, transparent);
+  transform: translateY(-2px);
+}
+
+/* 3. Outline (Ghost) */
+[data-button-style="outline"] .btn-primary {
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+[data-button-style="outline"] .btn-primary:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* 4. Soft (Tinted) */
+[data-button-style="soft"] .btn-primary {
+  background: color-mix(in srgb, var(--primary) 15%, transparent);
+  color: var(--primary);
+  border: none;
+}
+[data-button-style="soft"] .btn-primary:hover {
+  background: color-mix(in srgb, var(--primary) 25%, transparent);
 }
 
 .btn-outline {
@@ -163,4 +268,75 @@ body {
 .btn-outline:hover {
   border-color: var(--primary);
   color: var(--primary);
+}
+
+
+/* ---------------- V3 ENGINE DYNAMIC CLASSES ---------------- */
+
+/* Container Width Engine */
+.dynamic-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+[data-layout-width="max-w-5xl"] .dynamic-container { max-width: 64rem; }
+[data-layout-width="max-w-7xl"] .dynamic-container { max-width: 80rem; }
+[data-layout-width="max-w-screen-2xl"] .dynamic-container { max-width: 96rem; }
+[data-layout-width="w-full px-4"] .dynamic-container { max-width: 100%; }
+
+/* Section Spacing Engine */
+.dynamic-section { padding-top: 6rem; padding-bottom: 6rem; }
+[data-section-spacing="compact"] .dynamic-section { padding-top: 4rem; padding-bottom: 4rem; }
+[data-section-spacing="normal"] .dynamic-section { padding-top: 6rem; padding-bottom: 6rem; }
+[data-section-spacing="relaxed"] .dynamic-section { padding-top: 8rem; padding-bottom: 8rem; }
+[data-section-spacing="awwwards"] .dynamic-section { padding-top: 12rem; padding-bottom: 12rem; }
+
+/* Card Padding Engine */
+.glass-card { padding: 2rem; }
+[data-card-padding="compact"] .glass-card { padding: 1.5rem; }
+[data-card-padding="normal"] .glass-card { padding: 2rem; }
+[data-card-padding="spacious"] .glass-card { padding: 3rem; }
+
+/* Border Width Engine */
+[data-border-width="0px"] .glass-card { border-width: 0 !important; }
+[data-border-width="1px"] .glass-card { border-width: 1px !important; }
+[data-border-width="2px"] .glass-card { border-width: 2px !important; }
+[data-border-width="4px"] .glass-card { border-width: 4px !important; }
+
+/* Image Style Engine */
+.dynamic-img { transition: all 0.3s ease; object-fit: cover; }
+[data-image-style="rounded"] .dynamic-img { border-radius: 1rem; }
+[data-image-style="sharp"] .dynamic-img { border-radius: 0; }
+[data-image-style="monochrome"] .dynamic-img { filter: grayscale(100%); border-radius: 1rem; }
+[data-image-style="polaroid"] .dynamic-img { border: 12px solid white; border-bottom-width: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); border-radius: 0; }
+
+/* Content Alignment Engine */
+.dynamic-content { display: flex; flex-direction: column; }
+[data-content-align="left"] .dynamic-content { text-align: left; align-items: flex-start; justify-content: flex-start; }
+[data-content-align="center"] .dynamic-content { text-align: center; align-items: center; justify-content: center; }
+
+/* Page Transition / VFX */
+.dynamic-page-wrapper {
+  animation: fade-in 0.8s ease-out;
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+[data-page-transition="slide"] .dynamic-page-wrapper {
+  animation: slide-up 0.8s ease-out;
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+[data-page-transition="scale"] .dynamic-page-wrapper {
+  animation: scale-up 0.8s ease-out;
+}
+@keyframes scale-up {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+[data-page-transition="none"] .dynamic-page-wrapper {
+  animation: none;
 }

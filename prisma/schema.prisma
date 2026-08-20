@@ -10,9 +10,13 @@ datasource db {
 model User {
   id        Int      @id @default(autoincrement())
   username  String   @unique
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  password         String
+  email            String?  @unique
+  profileImage     String?
+  resetToken       String?
+  resetTokenExpiry DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 model Profile {
@@ -31,6 +35,7 @@ model Profile {
   githubUrl      String?
   linkedinUrl    String?
   email          String?
+  heroBadges     String   @default("[]") @db.Text
   updatedAt      DateTime @updatedAt
 }
 
@@ -63,6 +68,7 @@ model Skill {
   category        SkillCategory  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   relatedProjects String?        // For hover states
   technologies    String?        // Detailed tech used
+  icon            String?        // SVG or Image URL for the skill
   order           Int            @default(0)
 }
 
@@ -137,5 +143,85 @@ model ThemeSettings {
   cardStyle           String   @default("glassmorphism")
   borderRadius        String   @default("8px")
   buttonStyle         String   @default("filled")
+  navbarStyle         String   @default("floating")
+  cursorStyle         String   @default("default")
+  layoutWidth         String   @default("max-w-7xl")
+  glowIntensity       String   @default("medium")
+  textReveal          String   @default("fade")
+  sectionSpacing      String   @default("normal")
+  shadowStyle         String   @default("soft")
+  borderWidth         String   @default("1px")
+  backdropBlur        String   @default("md")
+  pageTransition      String   @default("fade")
+  imageStyle          String   @default("rounded")
+  activeMasterTheme   String   @default("glass")
+  
+  // --- SITE IDENTITY ---
+  siteTitle           String   @default("My Portfolio")
+  logoType            String   @default("text") // "text" or "image"
+  logoText            String   @default("KP.")
+  logoImageUrl        String?
+  faviconUrl          String?
+
+  // --- EXTENDED COLORS (5) ---
+  successColor        String   @default("#22c55e")
+  warningColor        String   @default("#f59e0b")
+  errorColor          String   @default("#ef4444")
+  infoColor           String   @default("#3b82f6")
+  surfaceColor        String   @default("#0a0a0a")
+
+  // --- ADVANCED TYPOGRAPHY (5) ---
+  headingFontWeight   String   @default("bold")
+  bodyFontWeight      String   @default("normal")
+  letterSpacing       String   @default("normal")
+  lineHeight          String   @default("relaxed")
+  textTransform       String   @default("none")
+
+  // --- BUTTON ARCHITECTURE (5) ---
+  buttonPadding       String   @default("normal")
+  buttonHoverEffect   String   @default("lift")
+  buttonIconPosition  String   @default("right")
+  buttonAnimation     String   @default("pulse")
+  buttonShadow        String   @default("none")
+
+  // --- NAVIGATION ENGINE (5) ---
+  navbarHeight        String   @default("normal")
+  navbarBlurIntensity String   @default("md")
+  navbarHoverEffect   String   @default("glow")
+  navbarDropdownStyle String   @default("modern")
+  logoSize            String   @default("normal")
+
+  // --- CARD ENGINE (5) ---
+  cardPadding         String   @default("normal")
+  cardHoverLift       String   @default("medium")
+  cardImageRatio      String   @default("video")
+  cardBorderAccent    String   @default("none")
+  cardGlowIntensity   String   @default("none")
+
+  // --- FOOTER & LAYOUT (3) ---
+  footerStyle         String   @default("modern")
+  footerColumns       String   @default("4")
+  contentAlignment    String   @default("left")
+
+  // --- MOTION DYNAMICS (2) ---
+  scrollBehavior      String   @default("smooth")
+  parallaxDepth       String   @default("medium")
+
+  // --- PAGE BUILDER ---
+  sectionOrder        String   @default("hero,about,experience,skills,projects,education,contact") @db.Text
+  skillLayout         String   @default("design1")
+  
   updatedAt           DateTime @updatedAt
+}
+
+model CustomSection {
+  id          Int      @id @default(autoincrement())
+  sectionId   String   @unique
+  title       String
+  subtitle    String?
+  layout      String   @default("full-text") // full-text, split-view, grid
+  content     String   @db.Text // JSON string of blocks
+  isVisible   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

@@ -24,6 +24,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
         level: data.level,
         categoryId: data.categoryId,
         technologies: data.technologies,
+        icon: data.icon,
       },
     });
     return NextResponse.json(updatedSkill, { status: 200 });

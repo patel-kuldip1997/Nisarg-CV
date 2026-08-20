@@ -16,10 +16,28 @@ export async function GET() {
           enableParallax: true,
           cardStyle: "glassmorphism",
           borderRadius: "8px",
-          buttonStyle: "filled"
+          buttonStyle: "filled",
+          navbarStyle: "floating",
+          cursorStyle: "default",
+          layoutWidth: "max-w-7xl",
+          glowIntensity: "medium",
+          textReveal: "fade",
+          sectionSpacing: "normal",
+          shadowStyle: "soft",
+          borderWidth: "1px",
+          backdropBlur: "md",
+          pageTransition: "fade",
+          imageStyle: "rounded",
+          activeMasterTheme: "glass"
         }
       });
     }
+    // Fetch faviconUrl directly from DB because Prisma Client is out of sync until restart
+    const rawResult: any = await prisma.$queryRawUnsafe("SELECT faviconUrl FROM ThemeSettings WHERE id = ?", settings.id);
+    if (rawResult && rawResult[0] && rawResult[0].faviconUrl !== undefined) {
+      (settings as any).faviconUrl = rawResult[0].faviconUrl;
+    }
+    
     return NextResponse.json(settings);
   } catch (error) {
     console.error("Error fetching theme settings:", error);
@@ -36,21 +54,18 @@ export async function PUT(request: Request) {
       return NextResponse.json({ error: "Settings not found" }, { status: 404 });
     }
 
+    // Remove immutable fields and mismatched frontend state fields from payload
+    const { id, updatedAt, createdAt, scrollSpeedPhysics, faviconUrl, ...updateData } = data;
+
     const updated = await prisma.themeSettings.update({
       where: { id: settings.id },
-      data: {
-        primaryColor: data.primaryColor,
-        secondaryColor: data.secondaryColor,
-        accentColor: data.accentColor,
-        backgroundColor: data.backgroundColor,
-        fontFamily: data.fontFamily,
-        backgroundAnimation: data.backgroundAnimation,
-        enableParallax: data.enableParallax,
-        cardStyle: data.cardStyle,
-        borderRadius: data.borderRadius,
-        buttonStyle: data.buttonStyle
-      }
+      data: updateData
     });
+
+    if (faviconUrl !== undefined) {
+      await prisma.$executeRawUnsafe("UPDATE ThemeSettings SET faviconUrl = ? WHERE id = ?", faviconUrl, settings.id);
+      (updated as any).faviconUrl = faviconUrl;
+    }
 
     return NextResponse.json(updated);
   } catch (error) {

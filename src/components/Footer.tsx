@@ -26,12 +26,12 @@ export default function Footer() {
       {/* Subtle top gradient */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="dynamic-container py-20">
         
         {/* Top Section: CTA */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-20 pb-16 border-b border-white/5 gap-8">
           <div className="max-w-xl">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">Let's build together.</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-[var(--text)] mb-4 tracking-tight">Let's build together.</h2>
             <p className="text-text-muted text-lg leading-relaxed">
               Open for new opportunities and exciting projects. If you're looking for a dedicated professional, let's talk.
             </p>
@@ -46,10 +46,10 @@ export default function Footer() {
           
           {/* Brand & Intro */}
           <div className="md:col-span-5 lg:col-span-4">
-            <Link href="#home" className="text-3xl font-black tracking-tighter text-white mb-6 inline-block">
+            <Link href="#home" className="text-3xl font-black tracking-tighter text-[var(--text)] mb-6 inline-block">
               <span className="text-primary">{initials[0]}</span>{initials.substring(1)}.
             </Link>
-            <h3 className="text-xl font-bold text-white mb-2 tracking-tight">{profile.name}</h3>
+            <h3 className="text-xl font-bold text-[var(--text)] mb-2 tracking-tight">{profile.name}</h3>
             <p className="text-text-muted font-medium mb-6 text-sm">{profile.primaryTitle}</p>
             
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-xs font-semibold">
@@ -60,11 +60,11 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="md:col-span-3 lg:col-span-3 lg:justify-self-center">
-            <h4 className="text-xs uppercase tracking-widest text-white/40 font-bold mb-6">Navigation</h4>
+            <h4 className="text-xs uppercase tracking-widest text-[var(--text)]/40 font-bold mb-6">Navigation</h4>
             <ul className="space-y-4">
               {['Home', 'Skills', 'Experience', 'Projects', 'Education'].map((item) => (
                 <li key={item}>
-                  <a href={`#${item.toLowerCase()}`} className="text-white/70 hover:text-white transition-colors text-sm font-medium">
+                  <a href={`#${item.toLowerCase()}`} className="text-[var(--text)]/70 hover:text-[var(--text)] transition-colors text-sm font-medium">
                     {item}
                   </a>
                 </li>
@@ -74,32 +74,32 @@ export default function Footer() {
 
           {/* Socials */}
           <div className="md:col-span-4 lg:col-span-5 lg:justify-self-end">
-            <h4 className="text-xs uppercase tracking-widest text-white/40 font-bold mb-6">Connect</h4>
+            <h4 className="text-xs uppercase tracking-widest text-[var(--text)]/40 font-bold mb-6">Connect</h4>
             <div className="flex flex-col space-y-4">
               {profile.linkedinUrl && (
-                <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-white transition-colors text-sm font-medium group">
-                  <LinkIcon size={18} className="text-white/40 group-hover:text-primary transition-colors" />
+                <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-[var(--text)]/70 hover:text-[var(--text)] transition-colors text-sm font-medium group">
+                  <LinkIcon size={18} className="text-[var(--text)]/40 group-hover:text-primary transition-colors" />
                   LinkedIn
                   <ArrowUpRight size={14} className="opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                 </a>
               )}
               {profile.githubUrl && (
-                <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white/70 hover:text-white transition-colors text-sm font-medium group">
-                  <Code size={18} className="text-white/40 group-hover:text-primary transition-colors" />
+                <a href={profile.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-[var(--text)]/70 hover:text-[var(--text)] transition-colors text-sm font-medium group">
+                  <Code size={18} className="text-[var(--text)]/40 group-hover:text-primary transition-colors" />
                   GitHub
                   <ArrowUpRight size={14} className="opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                 </a>
               )}
               {profile.email && (
-                <a href={`mailto:${profile.email}`} className="flex items-center gap-3 text-white/70 hover:text-white transition-colors text-sm font-medium group">
-                  <Mail size={18} className="text-white/40 group-hover:text-primary transition-colors" />
+                <a href={`mailto:${profile.email}`} className="flex items-center gap-3 text-[var(--text)]/70 hover:text-[var(--text)] transition-colors text-sm font-medium group">
+                  <Mail size={18} className="text-[var(--text)]/40 group-hover:text-primary transition-colors" />
                   {profile.email}
                   <ArrowUpRight size={14} className="opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
                 </a>
               )}
             </div>
             {profile.resumeUrl && (
-              <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-8 text-sm text-primary hover:text-white font-medium transition-colors underline-offset-8 hover:underline">
+              <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer" className="inline-block mt-8 text-sm text-primary hover:text-[var(--text)] font-medium transition-colors underline-offset-8 hover:underline">
                 Download Full Resume
               </a>
             )}
@@ -107,9 +107,15 @@ export default function Footer() {
           
         </div>
         
-        {/* Copyright */}
-        <div className="border-t border-white/5 pt-8 flex justify-center items-center text-xs text-white/40 font-medium tracking-wide">
-          <p className="text-center">© {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
+        {/* Copyright & Back to Top */}
+        <div className="border-t border-white/5 pt-8 flex justify-between items-center text-xs text-[var(--text)]/40 font-medium tracking-wide">
+          <p>© {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
+            className="flex items-center gap-2 hover:text-[var(--text)] transition-colors"
+          >
+            Back to Top <ArrowUpRight size={14} className="rotate-[-45deg]" />
+          </button>
         </div>
 
       </div>

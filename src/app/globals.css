@@ -41,6 +41,13 @@ body {
   overflow-x: hidden;
 }
 
+/* Touch & Mobile Cursor Reset */
+@media (hover: none) or (pointer: coarse) {
+  body, * {
+    cursor: auto !important;
+  }
+}
+
 /* Typography Engine */
 [data-font-weight="bold"] h1, [data-font-weight="bold"] h2, [data-font-weight="bold"] h3 { font-weight: 700; }
 [data-font-weight="extrabold"] h1, [data-font-weight="extrabold"] h2, [data-font-weight="extrabold"] h3 { font-weight: 800; }

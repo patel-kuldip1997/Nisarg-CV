@@ -15,9 +15,10 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
   try {
     const { id } = await params;
     const data = await request.json();
+    const { id: _, createdAt: __, updatedAt: ___, ...cleanData } = data;
     const updated = await prisma.project.update({
       where: { id: parseInt(id) },
-      data,
+      data: cleanData,
     });
     return NextResponse.json(updated, { status: 200 });
   } catch (error) {

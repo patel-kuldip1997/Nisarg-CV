@@ -256,12 +256,17 @@ export default function Home() {
               <div className="relative w-48 h-48 sm:w-64 sm:h-64 lg:w-72 lg:h-72 rounded-full p-2 bg-gradient-to-br from-primary/30 to-secondary/30 backdrop-blur-3xl border border-white/10 shadow-2xl shrink-0">
                 <div className="w-full h-full rounded-full overflow-hidden border border-white/5 bg-surface-elevated relative flex items-center justify-center">
                   <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                  {profile.profileImage ? (
-                    <img src={profile.profileImage} alt={profile.name} className="w-full h-full object-cover relative z-10" />
-                  ) : (
-                    <span className="text-8xl font-black text-text-muted/30 relative z-10">
-                      {profile.name ? profile.name.charAt(0).toUpperCase() : 'P'}
-                    </span>
+                  <span className="text-8xl font-black text-text-muted/30 absolute z-0 select-none">
+                    {profile.name ? profile.name.charAt(0).toUpperCase() : 'P'}
+                  </span>
+                  {profile.profileImage && (
+                    <img 
+                      src={profile.profileImage} 
+                      alt={profile.name} 
+                      className="w-full h-full object-cover relative z-10" 
+                      loading="eager"
+                      onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+                    />
                   )}
                 </div>
               </div>
@@ -293,7 +298,7 @@ export default function Home() {
                       <motion.div animate={{ y: [-12, 12, -12] }} transition={{ repeat: Infinity, duration: duration, ease: "easeInOut", delay: delay }} className="bg-surface-elevated/60 backdrop-blur-md border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] rounded-full px-4 py-2 sm:px-5 sm:py-2.5 flex items-center gap-2 sm:gap-3 whitespace-nowrap overflow-hidden hover:bg-surface-elevated/80 hover:scale-105 transition-all cursor-default">
                         {badge.type === 'image' && badgeValue ? (
                           <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white/5 rounded-full p-1.5 flex items-center justify-center">
-                            <img src={badgeValue} alt="Badge" className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" />
+                            <img src={badgeValue} alt="Badge" className="w-full h-full object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" loading="lazy" onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }} />
                           </div>
                         ) : (
                           <>
@@ -438,7 +443,7 @@ export default function Home() {
           
           <div className="relative border-l-2 border-primary/30 pl-8 space-y-12 ml-4">
             {experience.map((exp, index) => (
-              <motion.div key={exp.id} initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="relative glass-card p-8 group">
+              <motion.div key={exp.id} initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="relative glass-card p-6 sm:p-8 group">
                 <div className="absolute -left-[43px] top-8 w-5 h-5 rounded-full bg-primary border-4 border-background shadow-[0_0_10px_rgba(59,130,246,0.8)] group-hover:scale-125 transition-transform" />
                 <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
                   <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors">{exp.position}</h3>
@@ -476,7 +481,7 @@ export default function Home() {
 
           <div className="space-y-8">
             {education.map((edu, index) => (
-              <motion.div key={edu.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="glass-card p-8 flex flex-col md:flex-row gap-6 items-start group hover:border-primary/50 transition-colors">
+              <motion.div key={edu.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="glass-card p-6 sm:p-8 flex flex-col md:flex-row gap-6 items-start group hover:border-primary/50 transition-colors">
                 <div className="w-16 h-16 shrink-0 rounded-2xl bg-surface-elevated border border-border flex items-center justify-center text-primary group-hover:scale-110 group-hover:bg-primary/10 transition-all shadow-[0_0_15px_rgba(59,130,246,0.2)]">
                   <GraduationCap size={32} />
                 </div>
@@ -508,13 +513,16 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project, index) => (
               <motion.div key={project.id} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="glass-card group overflow-hidden border border-border flex flex-col h-full">
-                <div className="relative h-48 w-full overflow-hidden bg-surface-elevated">
-                  {project.imageUrl ? (
-                    <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Code2 size={48} className="text-border group-hover:text-primary transition-colors duration-500" />
-                    </div>
+                <div className="relative h-48 w-full overflow-hidden bg-surface-elevated flex items-center justify-center">
+                  <Code2 size={48} className="text-border group-hover:text-primary transition-colors duration-500 absolute z-0" />
+                  {project.imageUrl && (
+                    <img 
+                      src={project.imageUrl} 
+                      alt={project.title} 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 relative z-10" 
+                      loading="lazy"
+                      onError={(e) => { (e.target as HTMLElement).style.display = 'none'; }}
+                    />
                   )}
                   <div className="absolute top-4 right-4 bg-background/80 backdrop-blur px-3 py-1 rounded-full border border-border text-xs font-semibold text-primary">
                     {project.category}

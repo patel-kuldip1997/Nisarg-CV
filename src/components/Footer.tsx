@@ -108,7 +108,7 @@ export default function Footer() {
         </div>
         
         {/* Copyright & Back to Top */}
-        <div className="border-t border-white/5 pt-8 flex justify-between items-center text-xs text-[var(--text)]/40 font-medium tracking-wide">
+        <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-[var(--text)]/40 font-medium tracking-wide text-center sm:text-left">
           <p>© {new Date().getFullYear()} {profile.name}. All rights reserved.</p>
           <button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 

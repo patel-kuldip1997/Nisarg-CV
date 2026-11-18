@@ -445,9 +445,9 @@ export default function Home() {
             {experience.map((exp, index) => (
               <motion.div key={exp.id} initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="relative glass-card p-6 sm:p-8 group">
                 <div className="absolute -left-[43px] top-8 w-5 h-5 rounded-full bg-primary border-4 border-background shadow-[0_0_10px_rgba(59,130,246,0.8)] group-hover:scale-125 transition-transform" />
-                <div className="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
                   <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors">{exp.position}</h3>
-                  <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold border border-primary/20">
+                  <span className="inline-flex items-center justify-center px-3.5 py-1 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-semibold border border-primary/20 whitespace-nowrap shrink-0 w-fit">
                     {exp.startDate} - {exp.endDate}
                   </span>
                 </div>
@@ -486,9 +486,9 @@ export default function Home() {
                   <GraduationCap size={32} />
                 </div>
                 <div className="flex-1">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between mb-2 gap-2">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-2">
                     <h3 className="text-2xl font-bold text-white group-hover:text-primary transition-colors">{edu.degree}</h3>
-                    <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold border border-primary/20 w-fit">
+                    <span className="inline-flex items-center justify-center px-3.5 py-1 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-semibold border border-primary/20 whitespace-nowrap shrink-0 w-fit">
                       {edu.startDate} - {edu.endDate}
                     </span>
                   </div>

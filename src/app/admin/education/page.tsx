@@ -86,7 +86,7 @@ export default function AdminEducation() {
               <div>
                 <h3 className="text-xl font-bold text-white">{item.degree}</h3>
                 <p className="text-primary">{item.institution}</p>
-                <p className="text-sm text-text-muted">{item.startDate} - {item.endDate}</p>
+                <p className="text-sm text-text-muted whitespace-nowrap">{item.startDate} - {item.endDate}</p>
               </div>
               <div className="flex gap-2">
                 <button onClick={() => handleEdit(item)} className="p-2 text-primary hover:bg-primary/10 rounded"><Edit2 size={18}/></button>
